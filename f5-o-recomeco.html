@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>F5 — O Recomeço · Turma 6 · Karla Vieira</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --vinho:        #722F37;
+      --vinho-escuro: #4A1520;
+      --bege:         #FDF6EE;
+      --texto:        #2C1810;
+      --branco:       #FFFFFF;
+      --vinho-claro:  #F5E6D3;
+    }
+
+    body { font-family: 'Lato', sans-serif; color: var(--texto); background: var(--branco); line-height: 1.7; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.25; }
+    .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── BARRA DE URGÊNCIA ── */
+    #urgencia-bar {
+      background: var(--vinho-escuro);
+      color: var(--branco);
+      text-align: center;
+      padding: 14px 24px;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    #urgencia-bar strong { font-weight: 700; }
+
+    /* ── BOTÕES ── */
+    .btn-primary {
+      display: inline-block;
+      background: var(--vinho-escuro);
+      color: var(--branco);
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      padding: 18px 40px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--vinho); }
+
+    #hero .btn-primary,
+    #datas .btn-primary,
+    #cta-final .btn-primary {
+      background: var(--bege);
+      color: var(--vinho-escuro);
+    }
+    #hero .btn-primary:hover,
+    #datas .btn-primary:hover,
+    #cta-final .btn-primary:hover { background: var(--branco); color: var(--vinho-escuro); }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: var(--branco);
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-whatsapp:hover { background: #1ebe5d; }
+
+    .btn-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 40px; }
+
+    .foto-secao {
+      width: 100%; max-height: 420px; object-fit: cover;
+      border-radius: 8px; margin: 32px 0; display: block;
+    }
+    #hero .foto-secao {
+      max-width: 600px; max-height: 480px;
+      margin: 0 auto 40px; border-radius: 12px; opacity: 0.92;
+    }
+    #karla .foto-karla {
+      width: 200px; height: 200px; border-radius: 50%;
+      object-fit: cover; float: right;
+      margin: 0 0 20px 28px; border: 4px solid var(--vinho-claro);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      background: var(--vinho);
+      color: var(--branco);
+      padding: 100px 24px 80px;
+      text-align: center;
+    }
+    #hero .eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.8rem; letter-spacing: 0.14em;
+      text-transform: uppercase; opacity: 0.8; margin-bottom: 24px;
+    }
+    #hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 32px; max-width: 700px; margin-left: auto; margin-right: auto; }
+    #hero .sub1 { font-size: 1.15rem; max-width: 600px; margin: 0 auto 20px; opacity: 0.93; }
+    #hero .sub2 { font-size: 1.05rem; max-width: 560px; margin: 0 auto 48px; font-style: italic; opacity: 0.88; }
+
+    /* ── IDENTIFICAÇÃO ── */
+    #identificacao { background: var(--bege); padding: 80px 24px; text-align: center; }
+    #identificacao h2 { font-size: 1.8rem; margin-bottom: 40px; color: var(--vinho); }
+    .check-list { list-style: none; display: inline-block; text-align: left; max-width: 520px; }
+    .check-list li {
+      padding: 10px 0 10px 36px; position: relative;
+      font-size: 1.05rem; border-bottom: 1px solid #e8ddd1;
+    }
+    .check-list li:last-child { border-bottom: none; }
+    .check-list li::before {
+      content: ''; position: absolute; left: 0; top: 14px;
+      width: 20px; height: 20px;
+      border: 2px solid var(--vinho); border-radius: 50%; background: var(--vinho-claro);
+    }
+    #identificacao .nota { margin-top: 40px; font-size: 1.1rem; font-style: italic; color: var(--vinho-escuro); }
+
+    /* ── O QUE É ── */
+    #oque-e { background: var(--branco); padding: 80px 24px; }
+    #oque-e h2 { font-size: 1.8rem; color: var(--vinho); margin-bottom: 28px; }
+    #oque-e p { font-size: 1.05rem; margin-bottom: 20px; }
+    #oque-e .destaque {
+      background: var(--vinho-claro);
+      border-left: 4px solid var(--vinho);
+      padding: 20px 24px;
+      border-radius: 0 4px 4px 0;
+      font-style: italic; font-size: 1.05rem; margin: 32px 0;
+    }
+
+    /* ── FERIDAS ── */
+    #feridas { background: var(--vinho); color: var(--branco); padding: 80px 24px; }
+    #feridas h2 { font-size: 1.8rem; margin-bottom: 12px; text-align: center; }
+    #feridas .intro { text-align: center; opacity: 0.88; margin-bottom: 48px; font-size: 1.05rem; }
+    .feridas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .ferida-card { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 20px 24px; }
+    .ferida-card h3 { font-size: 1rem; margin-bottom: 6px; }
+    .ferida-card p { font-size: 0.88rem; opacity: 0.82; }
+
+    /* ── ESTRUTURA ── */
+    #estrutura { background: var(--bege); padding: 80px 24px; }
+    #estrutura h2 { font-size: 1.8rem; color: var(--vinho); margin-bottom: 40px; text-align: center; }
+    .estrutura-itens { list-style: none; max-width: 580px; margin: 0 auto; }
+    .estrutura-itens li {
+      display: flex; gap: 20px; align-items: flex-start;
+      padding: 20px 0; border-bottom: 1px solid #e8ddd1; font-size: 1.05rem;
+    }
+    .estrutura-itens li:last-child { border-bottom: none; }
+    .estrutura-num {
+      flex-shrink: 0; width: 36px; height: 36px;
+      background: var(--vinho); color: var(--branco);
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-weight: 700; font-size: 0.9rem;
+    }
+    .estrutura-itens li strong { display: block; margin-bottom: 4px; }
+
+    /* ── DATAS E INVESTIMENTO ── */
+    #datas { background: var(--vinho-escuro); color: var(--branco); padding: 80px 24px; text-align: center; }
+    #datas h2 { font-size: 1.8rem; margin-bottom: 48px; }
+    .datas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px; max-width: 640px; margin: 0 auto 48px;
+    }
+    .data-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 28px 20px;
+    }
+    .data-card .label { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; margin-bottom: 10px; }
+    .data-card .valor { font-family: 'Playfair Display', serif; font-size: 1.4rem; }
+    .preco-principal { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 8px; }
+    .preco-parcelado { font-size: 0.95rem; opacity: 0.75; margin-bottom: 40px; }
+
+    /* ── QUEM É KARLA ── */
+    #karla { background: var(--branco); padding: 80px 24px; }
+    #karla h2 { font-size: 1.8rem; color: var(--vinho); margin-bottom: 32px; }
+    #karla p { font-size: 1.05rem; margin-bottom: 20px; }
+    #karla .assinatura { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--vinho); margin-top: 32px; }
+
+    /* ── DEPOIMENTOS ── */
+    #depoimentos { background: var(--vinho); color: var(--branco); padding: 80px 24px; text-align: center; }
+    #depoimentos h2 { font-size: 1.8rem; margin-bottom: 48px; }
+    .depo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; text-align: left; }
+    .depo-card { background: rgba(255,255,255,0.12); border-radius: 8px; padding: 28px; }
+    .depo-card .texto { font-style: italic; font-size: 1rem; line-height: 1.65; margin-bottom: 20px; }
+    .depo-card .nome { font-weight: 700; font-size: 0.88rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.75; }
+
+    /* ── FAQ ── */
+    #faq { background: var(--bege); padding: 80px 24px; }
+    #faq h2 { font-size: 1.8rem; color: var(--vinho); margin-bottom: 40px; text-align: center; }
+    .faq-list { max-width: 640px; margin: 0 auto; }
+    details { border-bottom: 1px solid #ddd3c6; padding: 20px 0; }
+    summary { font-weight: 700; font-size: 1.02rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; font-size: 1.4rem; color: var(--vinho); font-weight: 300; flex-shrink: 0; }
+    details[open] summary::after { content: '-'; }
+    details p { padding-top: 14px; font-size: 1rem; opacity: 0.85; }
+
+    /* ── CTA FINAL ── */
+    #cta-final { background: var(--vinho); color: var(--branco); padding: 100px 24px; text-align: center; }
+    #cta-final .versiculo { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.25rem; max-width: 540px; margin: 0 auto 12px; opacity: 0.9; }
+    #cta-final .versiculo-ref { font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.65; margin-bottom: 56px; }
+    #cta-final h2 { font-size: clamp(1.5rem, 4vw, 2.2rem); max-width: 600px; margin: 0 auto 28px; }
+    #cta-final .texto { font-size: 1.1rem; max-width: 520px; margin: 0 auto 16px; opacity: 0.9; }
+    #cta-final .prazo { font-size: 0.9rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.65; margin-bottom: 40px; }
+    #cta-final .preco { font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.65; margin-top: 16px; }
+
+    footer { background: var(--texto); color: var(--branco); text-align: center; padding: 32px 24px; font-size: 0.85rem; opacity: 0.85; }
+
+    @media (max-width: 500px) {
+      .btn-primary, .btn-whatsapp { width: 100%; text-align: center; justify-content: center; }
+      #karla .foto-karla { float: none; display: block; margin: 0 auto 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- BARRA DE URGÊNCIA -->
+<div id="urgencia-bar">
+  Inscrições abertas · Carrinho fecha em <strong>11 de julho</strong> · Turma começa <strong>13 de julho</strong>
+</div>
+
+<!-- 1. HERO -->
+<section id="hero">
+  <div class="container">
+    <p class="eyebrow">F5 — O Recomeço · Turma 6</p>
+    <h1>Você não precisa carregar mais o que foi feito em você.</h1>
+    <p class="sub1">
+      O F5 é o grupo terapêutico onde você vai à raiz das suas feridas emocionais
+      e recomeça — corpo, alma e espírito.
+    </p>
+    <p class="sub2">
+      Turma 6 começa em 13 de julho. Inscrições abertas até 11 de julho.
+    </p>
+    <img src="imagens/karla-hero.jpg" alt="Karla Vieira" class="foto-secao" />
+    <div class="btn-wrap">
+      <a href="LINK_KIWIFY_F5" class="btn-primary">QUERO ENTRAR PARA A TURMA 6</a>
+    </div>
+  </div>
+</section>
+
+<!-- 2. IDENTIFICAÇÃO -->
+<section id="identificacao">
+  <div class="container">
+    <h2>Você se reconhece nisso?</h2>
+    <img src="imagens/mulher-natureza.jpg" alt="" class="foto-secao" />
+    <ul class="check-list">
+      <li>Você sabe que alguma coisa dentro de você não está certa, mas não consegue nomear o quê</li>
+      <li>Repete os mesmos padrões em relacionamentos, mesmo sabendo que vão te machucar</li>
+      <li>Carrega uma ansiedade que não para, mesmo quando a vida "está bem"</li>
+      <li>Se sente presa num ciclo que você consegue ver, mas não consegue sair</li>
+      <li>Já tentou mudar por força de vontade. Não funcionou.</li>
+      <li>Tem medo de olhar pra dentro, mas sabe que é por aí que precisa ir</li>
+    </ul>
+    <p class="nota">Se você se reconheceu em pelo menos três, você está no lugar certo.</p>
+  </div>
+</section>
+
+<!-- 3. O QUE É O F5 -->
+<section id="oque-e">
+  <div class="container">
+    <h2>O que é o F5 — O Recomeço</h2>
+    <p>
+      F5 não é um curso. Não é uma palestra. É um processo.
+    </p>
+    <p>
+      É o grupo terapêutico onde você vai às raízes — as 5 feridas emocionais
+      e os traumas com o pai e a mãe — e trabalha cada uma delas de forma integrada:
+      corpo, alma e espírito.
+    </p>
+    <div class="destaque">
+      A maioria das mulheres passa anos tentando mudar comportamentos sem tocar na raiz.
+      É como cortar o mato sem arrancar a raiz. Nasce de novo. Sempre.
+      O F5 vai à raiz.
+    </div>
+    <p>
+      Você entra entendendo o que são suas feridas.
+      Você sai sabendo de onde cada padrão vem e com ferramentas reais para sair do ciclo.
+    </p>
+    <p>
+      Isso não é autoconhecimento superficial. É processo terapêutico em grupo,
+      com acompanhamento individual da Karla.
+    </p>
+  </div>
+</section>
+
+<!-- 4. AS FERIDAS TRABALHADAS -->
+<section id="feridas">
+  <div class="container">
+    <h2>As feridas que você vai trabalhar</h2>
+    <p class="intro">
+      Cada ferida tem uma origem, um padrão e um caminho de saída.
+      No F5, você trabalha todas elas.
+    </p>
+    <div class="feridas-grid">
+      <div class="ferida-card">
+        <h3>Rejeição</h3>
+        <p>Se anula para ser aceita. Sabota antes que o outro rejeite.</p>
+      </div>
+      <div class="ferida-card">
+        <h3>Abandono</h3>
+        <p>Dependência emocional. Faz tudo para não ser deixada.</p>
+      </div>
+      <div class="ferida-card">
+        <h3>Humilhação</h3>
+        <p>Vergonha de si mesma. Aceita migalhas. Medo de ocupar espaço.</p>
+      </div>
+      <div class="ferida-card">
+        <h3>Injustiça</h3>
+        <p>Perfeccionismo extremo. Autocobrança. Nunca está satisfeita.</p>
+      </div>
+      <div class="ferida-card">
+        <h3>Traição</h3>
+        <p>Desconfiança constante. Controla tudo. Testa as pessoas.</p>
+      </div>
+      <div class="ferida-card">
+        <h3>Trauma com a Mãe</h3>
+        <p>Sensação de nunca ser suficiente. Voz interna crítica e punitiva.</p>
+      </div>
+      <div class="ferida-card">
+        <h3>Trauma com o Pai</h3>
+        <p>Dificuldade de confiar, de prosperar, de se sentir protegida.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. ESTRUTURA DO PROGRAMA -->
+<section id="estrutura">
+  <div class="container">
+    <h2>Como o F5 funciona</h2>
+    <ul class="estrutura-itens">
+      <li>
+        <span class="estrutura-num">8</span>
+        <div>
+          <strong>Encontros em grupo ao vivo</strong>
+          Semanais, online. Cada encontro trabalha uma ferida — da origem até o caminho de saída.
+        </div>
+      </li>
+      <li>
+        <span class="estrutura-num">2</span>
+        <div>
+          <strong>Sessões individuais com a Karla</strong>
+          Uma no início (para entender onde você está) e uma no final (para consolidar o processo).
+        </div>
+      </li>
+      <li>
+        <span class="estrutura-num">3</span>
+        <div>
+          <strong>Pilares integrados em cada encontro</strong>
+          Corpo, alma e espírito. Neurociência, psicanálise e fé — sem religiosidade.
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 6. DATAS E INVESTIMENTO -->
+<section id="datas">
+  <div class="container">
+    <h2>Turma 6 — Julho 2026</h2>
+    <div class="datas-grid">
+      <div class="data-card">
+        <p class="label">Carrinho abre</p>
+        <p class="valor">4 de julho</p>
+      </div>
+      <div class="data-card">
+        <p class="label">Carrinho fecha</p>
+        <p class="valor">11 de julho</p>
+      </div>
+      <div class="data-card">
+        <p class="label">Início da turma</p>
+        <p class="valor">13 de julho</p>
+      </div>
+    </div>
+    <p class="preco-principal">R$ 697</p>
+    <p class="preco-parcelado">ou em até 12x no cartão</p>
+    <div class="btn-wrap">
+      <a href="LINK_KIWIFY_F5" class="btn-primary">QUERO ENTRAR PARA A TURMA 6</a>
+      <a href="https://wa.me/5511949760542" class="btn-whatsapp" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Tem dúvidas? Fala comigo no WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 7. QUEM É KARLA -->
+<section id="karla">
+  <div class="container">
+    <h2>Quem sou eu para te falar disso</h2>
+    <img src="imagens/foto-karla-1.png" alt="Karla Vieira" class="foto-karla" />
+    <p>
+      Sou Karla Vieira, terapeuta. E eu não aprendi sobre feridas emocionais nos livros primeiro.
+      Aprendi na pele.
+    </p>
+    <p>
+      Cresci ouvindo comparações. Buscando aprovação que nunca chegava da forma que eu precisava.
+      Carreguei por anos uma voz interna que me dizia que eu nunca era suficiente,
+      e acreditei nela por muito tempo.
+    </p>
+    <p>
+      Sofri perdas que me colocaram no fundo do poço.
+      A perda do meu filho Cauã foi uma delas.
+      E foi nesse fundo que eu entendi: ou eu aprendia a governar minha própria mente,
+      ou ia continuar sendo governada pelo que ficou lá atrás.
+    </p>
+    <p>
+      Fui buscar entender, de verdade, o que acontecia comigo.
+      Neurociência. Psicanálise. Fé. Corpo, alma e espírito juntos.
+      E quando entendi, não consegui guardar só pra mim.
+    </p>
+    <p>
+      O F5 nasceu dessa jornada. Não como teoria — como caminho que eu mesma percorri
+      e que hoje percorro com cada mulher que entra no grupo.
+    </p>
+    <p>
+      Eu sei exatamente como você se sente, mulher. Porque eu estive lá.
+    </p>
+    <p class="assinatura">Karla Vieira</p>
+  </div>
+</section>
+
+<!-- 8. DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="container">
+    <h2>O que dizem as mulheres que já fizeram o F5</h2>
+    <div class="depo-grid">
+      <div class="depo-card">
+        <p class="texto">
+          "Como me fez muito bem. Estou me sentindo liberta, livre, sem culpa.
+          Antes de começar estava com dor de cabeça, nas costas, nos ombros.
+          Depois da técnica me senti outra pessoa."
+        </p>
+        <p class="nome">Anônima</p>
+      </div>
+      <div class="depo-card">
+        <p class="texto">
+          "Para vocês terem noção de quanto foi um divisor de águas pra mim.
+          Quando meu marido chegou do serviço, percebeu eu mais leve. E ele não sabia de nada."
+        </p>
+        <p class="nome">Thai</p>
+      </div>
+      <div class="depo-card">
+        <p class="texto">
+          "Essa foi tão importante pra mim. Tão necessária.
+          Creio que Deus me colocou aqui no momento em que eu mais precisava.
+          Meu coração transborda gratidão."
+        </p>
+        <p class="nome">Anônima</p>
+      </div>
+      <div class="depo-card">
+        <p class="texto">
+          "Era pra mim esse processo. Fui à missa das 07h sem forças,
+          não queria nem sair da cama. Depois da técnica estou ótima."
+        </p>
+        <p class="nome">Anônima</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. FAQ -->
+<section id="faq">
+  <div class="container">
+    <h2>Perguntas frequentes</h2>
+    <div class="faq-list">
+      <details>
+        <summary>O que exatamente acontece nos encontros em grupo?</summary>
+        <p>
+          Cada encontro trabalha uma ferida emocional — da origem até o caminho de saída.
+          A Karla conduz o processo com ensino, exercícios práticos e espaço de partilha.
+          Os encontros são ao vivo, online, com o grupo da turma.
+        </p>
+      </details>
+      <details>
+        <summary>Como funcionam as 2 sessões individuais?</summary>
+        <p>
+          Uma sessão no início do processo (para entender onde você está e o que precisa trabalhar)
+          e uma no final (para consolidar o que mudou e traçar os próximos passos).
+          São sessões individuais com a Karla, por vídeo.
+        </p>
+      </details>
+      <details>
+        <summary>Preciso ter feito terapia antes?</summary>
+        <p>
+          Não. O F5 foi desenvolvido para qualquer mulher que quer trabalhar as raízes das suas feridas,
+          com ou sem experiência terapêutica anterior.
+        </p>
+      </details>
+      <details>
+        <summary>Posso parcelar?</summary>
+        <p>Sim. O investimento de R$697 pode ser parcelado em até 12x no cartão de crédito.</p>
+      </details>
+      <details>
+        <summary>O grupo tem quantas vagas?</summary>
+        <p>
+          As turmas do F5 têm vagas limitadas para garantir a qualidade do acompanhamento.
+          Quando o carrinho fecha, fecha. Não há lista de espera para a turma atual.
+        </p>
+      </details>
+      <details>
+        <summary>E se eu não puder comparecer a algum encontro?</summary>
+        <p>
+          Os encontros são gravados e ficam disponíveis para você assistir depois.
+          Recomendamos presença ao vivo sempre que possível, mas entendemos que imprevistos acontecem.
+        </p>
+      </details>
+      <details>
+        <summary>Quando o carrinho abre e fecha?</summary>
+        <p>
+          O carrinho abre no dia 4 de julho, após o Workshop Ferida da Rejeição.
+          Fecha definitivamente no dia 11 de julho.
+          A turma começa no dia 13 de julho.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- 10. CTA FINAL -->
+<section id="cta-final">
+  <div class="container">
+    <p class="versiculo">
+      "Porque eu bem sei os planos que tenho para vós, diz o Senhor,
+      planos de bem e não de mal, para vos dar um futuro e uma esperança."
+    </p>
+    <p class="versiculo-ref">Jeremias 29:11</p>
+
+    <h2>O recomeço começa quando você para de fugir do que ficou.</h2>
+    <p class="texto">
+      Você já sabe que existe algo que precisa mudar.
+      O F5 é onde isso acontece — com processo, com acompanhamento, com quem já esteve lá.
+    </p>
+    <p class="prazo">Inscrições abertas até 11 de julho · Turma começa 13 de julho</p>
+
+    <img src="imagens/mulher-colorida.jpg" alt="" class="foto-secao" />
+
+    <div class="btn-wrap">
+      <a href="LINK_KIWIFY_F5" class="btn-primary">QUERO ENTRAR PARA A TURMA 6 — R$697</a>
+      <p class="preco">Parcelável em até 12x · Vagas limitadas</p>
+      <a href="https://wa.me/5511949760542" class="btn-whatsapp" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Tem dúvidas? Fala comigo no WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Karla Vieira · Todos os direitos reservados</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workshop Ferida Paterna — Karla Vieira</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --vinho:   #722F37;
+      --vinho-escuro: #4A1520;
+      --bege:   #FDF6EE;
+      --texto:  #2C1810;
+      --branco: #FFFFFF;
+      --vinho-claro: #F5E6D3;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      color: var(--texto);
+      background: var(--branco);
+      line-height: 1.7;
+    }
+
+    h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.25; }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--vinho-escuro);
+      color: var(--branco);
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      padding: 18px 40px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-primary:hover { background: var(--vinho); }
+
+    #hero .btn-primary,
+    #tipos .btn-primary,
+    #depoimentos .btn-primary,
+    #cta-final .btn-primary {
+      background: var(--bege);
+      color: var(--vinho-escuro);
+    }
+    #hero .btn-primary:hover,
+    #tipos .btn-primary:hover,
+    #depoimentos .btn-primary:hover,
+    #cta-final .btn-primary:hover {
+      background: var(--branco);
+      color: var(--vinho-escuro);
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: var(--branco);
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-whatsapp:hover { background: #1ebe5d; }
+
+    .btn-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 40px; }
+
+    .foto-secao {
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin: 32px 0;
+      display: block;
+    }
+    #hero .foto-secao {
+      max-width: 600px;
+      max-height: 480px;
+      margin: 0 auto 40px;
+      border-radius: 12px;
+      opacity: 0.92;
+    }
+    #karla .foto-karla {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      float: right;
+      margin: 0 0 20px 28px;
+      border: 4px solid var(--vinho-claro);
+    }
+
+    #hero {
+      background: var(--vinho);
+      color: var(--branco);
+      padding: 100px 24px 80px;
+      text-align: center;
+    }
+    #hero .eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 24px;
+    }
+    #hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 32px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #hero .sub1 {
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin: 0 auto 20px;
+      opacity: 0.93;
+    }
+    #hero .sub2 {
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin: 0 auto 48px;
+      font-style: italic;
+      opacity: 0.88;
+    }
+
+    #identificacao {
+      background: var(--bege);
+      padding: 80px 24px;
+      text-align: center;
+    }
+    #identificacao h2 {
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+      color: var(--vinho);
+    }
+    .check-list {
+      list-style: none;
+      display: inline-block;
+      text-align: left;
+      max-width: 520px;
+    }
+    .check-list li {
+      padding: 10px 0 10px 36px;
+      position: relative;
+      font-size: 1.05rem;
+      border-bottom: 1px solid #e8ddd1;
+    }
+    .check-list li:last-child { border-bottom: none; }
+    .check-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--vinho);
+      border-radius: 50%;
+      background: var(--vinho-claro);
+    }
+    #identificacao .nota {
+      margin-top: 40px;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--vinho-escuro);
+    }
+
+    #raiz {
+      background: var(--branco);
+      padding: 80px 24px;
+    }
+    #raiz h2 {
+      font-size: 1.8rem;
+      color: var(--vinho);
+      margin-bottom: 28px;
+    }
+    #raiz p { margin-bottom: 20px; font-size: 1.05rem; }
+    #raiz .destaque {
+      background: var(--vinho-claro);
+      border-left: 4px solid var(--vinho);
+      padding: 20px 24px;
+      border-radius: 0 4px 4px 0;
+      font-style: italic;
+      font-size: 1.05rem;
+      margin: 32px 0;
+    }
+
+    #tipos {
+      background: var(--vinho);
+      color: var(--branco);
+      padding: 80px 24px;
+    }
+    #tipos h2 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    #tipos .intro {
+      text-align: center;
+      opacity: 0.88;
+      margin-bottom: 48px;
+      font-size: 1.05rem;
+    }
+    .tipos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .tipo-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .tipo-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .tipo-card .marca { font-size: 0.9rem; opacity: 0.82; font-style: italic; }
+
+    #oque-e {
+      background: var(--bege);
+      padding: 80px 24px;
+      text-align: center;
+    }
+    #oque-e h2 {
+      font-size: 1.8rem;
+      color: var(--vinho);
+      margin-bottom: 20px;
+    }
+    #oque-e .subtitulo {
+      font-size: 1.1rem;
+      max-width: 560px;
+      margin: 0 auto 48px;
+    }
+    .pilares {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .pilar {
+      background: var(--branco);
+      border: 2px solid var(--vinho-claro);
+      border-radius: 8px;
+      padding: 24px 28px;
+      min-width: 180px;
+      flex: 1;
+      max-width: 220px;
+    }
+    .pilar .icon { font-size: 1.5rem; margin-bottom: 10px; }
+    .pilar h3 { font-size: 1rem; color: var(--vinho); margin-bottom: 6px; }
+    .pilar p { font-size: 0.88rem; opacity: 0.8; }
+    #oque-e .detalhe { font-size: 1rem; opacity: 0.75; margin-top: 32px; }
+
+    #aprende { background: var(--branco); padding: 80px 24px; }
+    #aprende h2 {
+      font-size: 1.8rem;
+      color: var(--vinho);
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .aprende-list { list-style: none; max-width: 620px; margin: 0 auto; }
+    .aprende-list li {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 0;
+      border-bottom: 1px solid #f0e8dc;
+      font-size: 1.05rem;
+    }
+    .aprende-list li:last-child { border-bottom: none; }
+    .aprende-list li .check {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      background: var(--vinho);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .aprende-list li .check svg {
+      width: 14px; height: 14px;
+      fill: none; stroke: var(--branco); stroke-width: 2.5;
+    }
+
+    #para-quem { background: var(--vinho-claro); padding: 80px 24px; }
+    #para-quem h2 { font-size: 1.8rem; color: var(--vinho); margin-bottom: 24px; }
+    #para-quem p { font-size: 1.05rem; margin-bottom: 16px; }
+    #para-quem .exemplos { font-style: italic; color: var(--vinho-escuro); margin-top: 8px; }
+
+    #nao-para-quem { background: var(--bege); padding: 60px 24px; }
+    #nao-para-quem h2 { font-size: 1.5rem; color: var(--texto); margin-bottom: 20px; }
+    #nao-para-quem p { font-size: 1rem; margin-bottom: 12px; opacity: 0.85; }
+
+    #karla { background: var(--branco); padding: 80px 24px; }
+    #karla h2 { font-size: 1.8rem; color: var(--vinho); margin-bottom: 32px; }
+    #karla p { font-size: 1.05rem; margin-bottom: 20px; }
+    #karla .assinatura {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--vinho);
+      margin-top: 32px;
+    }
+
+    #depoimentos {
+      background: var(--vinho);
+      color: var(--branco);
+      padding: 80px 24px;
+      text-align: center;
+    }
+    #depoimentos h2 { font-size: 1.8rem; margin-bottom: 48px; }
+    .depo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      text-align: left;
+    }
+    .depo-card { background: rgba(255,255,255,0.12); border-radius: 8px; padding: 28px; }
+    .depo-card .texto { font-style: italic; font-size: 1rem; line-height: 1.65; margin-bottom: 20px; }
+    .depo-card .nome { font-weight: 700; font-size: 0.88rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.75; }
+
+    #faq { background: var(--bege); padding: 80px 24px; }
+    #faq h2 { font-size: 1.8rem; color: var(--vinho); margin-bottom: 40px; text-align: center; }
+    .faq-list { max-width: 640px; margin: 0 auto; }
+    details { border-bottom: 1px solid #ddd3c6; padding: 20px 0; }
+    summary {
+      font-weight: 700; font-size: 1.02rem; cursor: pointer;
+      list-style: none; display: flex; justify-content: space-between; align-items: center;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; font-size: 1.4rem; color: var(--vinho); font-weight: 300; flex-shrink: 0; }
+    details[open] summary::after { content: '-'; }
+    details p { padding-top: 14px; font-size: 1rem; opacity: 0.85; }
+
+    #cta-final {
+      background: var(--vinho);
+      color: var(--branco);
+      padding: 100px 24px;
+      text-align: center;
+    }
+    #cta-final .versiculo {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      max-width: 540px;
+      margin: 0 auto 12px;
+      opacity: 0.9;
+    }
+    #cta-final .versiculo-ref {
+      font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.65; margin-bottom: 56px;
+    }
+    #cta-final h2 { font-size: clamp(1.5rem, 4vw, 2.2rem); max-width: 600px; margin: 0 auto 28px; }
+    #cta-final .texto { font-size: 1.1rem; max-width: 520px; margin: 0 auto 48px; opacity: 0.9; }
+    #cta-final .preco { font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.65; margin-top: 16px; }
+
+    footer { background: var(--texto); color: var(--branco); text-align: center; padding: 32px 24px; font-size: 0.85rem; opacity: 0.85; }
+
+    @media (max-width: 500px) {
+      .btn-primary, .btn-whatsapp { width: 100%; text-align: center; justify-content: center; }
+      .pilares { flex-direction: column; align-items: center; }
+      .pilar { max-width: 100%; }
+      #karla .foto-karla { float: none; display: block; margin: 0 auto 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 1. HERO -->
+<section id="hero">
+  <div class="container">
+    <p class="eyebrow">Workshop Ferida Paterna</p>
+    <h1>"O jeito como seu pai te tratou é o jeito como você aprendeu a se tratar."</h1>
+    <p class="sub1">
+      É por isso que hoje você sente que precisa dar conta de tudo sozinha.
+      Desconfia de quem quer te proteger. Se diminui diante de autoridade.
+      Tem dificuldade de prosperar e de receber.
+    </p>
+    <p class="sub2">
+      Nesse workshop você vai entender de onde vem esse padrão — e aprender a se libertar dele.
+    </p>
+    <img src="imagens/wp1-pai-crianca.png" alt="" class="foto-secao" />
+    <div class="btn-wrap">
+      <a href="LINK_KIWIFY_PATERNA" class="btn-primary">QUERO ME LIBERTAR DESSE PADRÃO</a>
+    </div>
+  </div>
+</section>
+
+<!-- 2. IDENTIFICAÇÃO -->
+<section id="identificacao">
+  <div class="container">
+    <h2>Você se reconhece nisso?</h2>
+    <img src="imagens/wp2-mulher-sozinha.png" alt="" class="foto-secao" />
+    <ul class="check-list">
+      <li>Sensação de que precisa dar conta de tudo sozinha — sempre</li>
+      <li>Dificuldade de confiar em homens: no relacionamento, no trabalho, na fé</li>
+      <li>Medo de autoridade — você some quando precisa se posicionar</li>
+      <li>Relacionamentos com homens que decepcionam, que abandonam ou que controlam</li>
+      <li>Dificuldade com dinheiro — dificuldade de prosperar, de receber, de se sentir merecedora</li>
+      <li>Medo de ocupar espaço e de ser vista</li>
+      <li>Ansiedade quando você precisa depender de alguém</li>
+    </ul>
+    <p class="nota">Se você marcou pelo menos três, você está no lugar certo, mulher.</p>
+  </div>
+</section>
+
+<!-- 3. A RAIZ -->
+<section id="raiz">
+  <div class="container">
+    <h2>De onde vem tudo isso</h2>
+    <p>
+      O pai é o primeiro homem que existe na vida de uma criança.
+      É através dele que ela aprende: o mundo é seguro? Posso confiar? Mereço ser protegida?
+    </p>
+    <img src="imagens/wp3-crianca-esperando.png" alt="" class="foto-secao" />
+    <p>
+      Quando esse primeiro homem falha — pela ausência, pela violência, pela frieza ou pelo abandono —
+      a criança não pensa: "meu pai está errado."
+      Ela pensa: "não sou boa o bastante para ser protegida."
+      "Os homens não ficam." "Preciso me virar sozinha."
+    </p>
+    <div class="destaque">
+      "Se eu fosse diferente, talvez ele tivesse ficado."<br>
+      "Não dá pra depender de ninguém mesmo."<br>
+      "Eu dou conta. Sempre dei."
+    </div>
+    <p>
+      Essas mensagens ficam gravadas. E na vida adulta continuam operando em cada relacionamento,
+      em cada decisão financeira, em cada momento em que você precisaria se sentir segura — e não consegue.
+    </p>
+    <p>
+      Não porque você é fraca.
+      Porque ninguém te ensinou de onde isso veio.
+    </p>
+  </div>
+</section>
+
+<!-- 4. OS 5 TIPOS DE PAIS -->
+<section id="tipos">
+  <div class="container">
+    <h2>Os 5 tipos de pais e as marcas que cada um deixa</h2>
+    <p class="intro">
+      Toda ferida paterna tem uma origem específica.
+      Reconhecer a sua é o primeiro passo para sair do padrão.
+    </p>
+    <img src="imagens/wp4-pai-distante.png" alt="" class="foto-secao" />
+    <div class="tipos-grid">
+      <div class="tipo-card">
+        <h3>O pai ausente</h3>
+        <p class="marca">Fisicamente presente ou não, emocionalmente nunca estava. Marca: sensação de que não vale a pena depender de ninguém.</p>
+      </div>
+      <div class="tipo-card">
+        <h3>O pai autoritário</h3>
+        <p class="marca">Rígido, controlador, sua palavra era a lei. Marca: medo de autoridade e dificuldade de se posicionar no mundo.</p>
+      </div>
+      <div class="tipo-card">
+        <h3>O pai violento</h3>
+        <p class="marca">Usava a voz ou as mãos para intimidar. Marca: dificuldade profunda de confiar em homens e de se sentir segura.</p>
+      </div>
+      <div class="tipo-card">
+        <h3>O pai fraco</h3>
+        <p class="marca">Estava presente, mas você o protegia. Marca: sensação de que precisa ser sempre a forte, que não pode pedir ajuda.</p>
+      </div>
+      <div class="tipo-card">
+        <h3>O pai que foi embora</h3>
+        <p class="marca">Abandonou física ou emocionalmente. Marca: ferida de rejeição profunda e dificuldade de receber amor e prosperidade.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. O QUE É O WORKSHOP -->
+<section id="oque-e">
+  <div class="container">
+    <h2>O que é o Workshop Ferida Paterna</h2>
+    <p class="subtitulo">
+      3 horas gravadas. Você acessa na hora que quiser, no seu ritmo.
+    </p>
+    <div class="pilares">
+      <div class="pilar">
+        <div class="icon">&#9679;</div>
+        <h3>Psicanálise</h3>
+        <p>Como a ferida se forma e opera no inconsciente</p>
+      </div>
+      <div class="pilar">
+        <div class="icon">&#9679;</div>
+        <h3>Neurociência</h3>
+        <p>Como o cérebro registra e perpetua o trauma</p>
+      </div>
+      <div class="pilar">
+        <div class="icon">&#9679;</div>
+        <h3>Fé</h3>
+        <p>Como Deus como Pai ressignifica o que o pai humano não deu</p>
+      </div>
+    </div>
+    <img src="imagens/wp5-mulher-luz.png" alt="" class="foto-secao" />
+    <p class="detalhe">
+      Inclui exercício prático de liberação no final: "Do Desamparo à Proteção."
+      Você não sairá a mesma depois desse exercício.
+    </p>
+    <div class="btn-wrap">
+      <a href="LINK_KIWIFY_PATERNA" class="btn-primary">QUERO ME LIBERTAR DESSE PADRÃO</a>
+    </div>
+  </div>
+</section>
+
+<!-- 6. O QUE VOCÊ VAI APRENDER -->
+<section id="aprende">
+  <div class="container">
+    <h2>O que você vai aprender</h2>
+    <ul class="aprende-list">
+      <li>
+        <span class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Como a ferida paterna molda sua autoestima, sua relação com autoridade e com dinheiro
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        A conexão entre o trauma paterno e a ansiedade crônica
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Os 5 tipos de pais e as marcas específicas que cada um deixa
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Por que você busca aprovação masculina — ou se fecha completamente para os homens
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Como Deus como Pai pode ser ressignificado para quem nunca teve um pai seguro
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        O exercício de liberação "Do Desamparo à Proteção"
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 7. PARA QUEM É -->
+<section id="para-quem">
+  <div class="container">
+    <h2>Para quem é esse workshop</h2>
+    <p>
+      Para mulheres que sentem que a relação com o pai ainda afeta sua vida hoje.
+    </p>
+    <p class="exemplos">
+      Mesmo que ele já tenha falecido.<br>
+      Mesmo que você nunca o tenha conhecido.<br>
+      Mesmo que o relacionamento seja distante ou inexistente.<br>
+      Mesmo que você ache que já superou.
+    </p>
+    <p>
+      A ferida não precisa que o pai esteja presente para continuar operando.
+      Ela opera de dentro. É lá que o trabalho acontece.
+    </p>
+  </div>
+</section>
+
+<!-- 8. PARA QUEM NÃO É -->
+<section id="nao-para-quem">
+  <div class="container">
+    <h2>Para quem não é</h2>
+    <p>Para quem busca só teoria, sem disposição para se aprofundar emocionalmente.</p>
+    <p>Para quem não quer olhar para sua história com honestidade.</p>
+    <p>
+      O conteúdo é profundo. Ele vai mexer com você.
+      Isso é intencional, e é conduzido com cuidado.
+      Mas se você não estiver disposta a sentir, espere o momento certo.
+    </p>
+  </div>
+</section>
+
+<!-- 9. QUEM É KARLA -->
+<section id="karla">
+  <div class="container">
+    <h2>Quem sou eu para te falar disso</h2>
+    <img src="imagens/foto-karla-1.png" alt="Karla Vieira" class="foto-karla" />
+    <p>
+      Sou Karla Vieira, terapeuta. E eu não aprendi sobre ferida paterna nos livros primeiro.
+      Aprendi na pele.
+    </p>
+    <p>
+      Cresci num ambiente onde a ausência e a comparação deixaram marcas que eu levei por anos
+      sem saber nomear. Busquei aprovação em lugares errados. Tive dificuldade de confiar.
+      Senti que precisava ser forte por conta própria, porque depender era perigoso.
+    </p>
+    <p>
+      Sofri perdas que me colocaram no fundo do poço.
+      A perda do meu filho Cauã foi uma delas.
+      E foi nesse fundo que eu entendi: ou eu aprendia a governar minha própria mente,
+      ou ia continuar sendo governada pelo que ficou lá atrás.
+    </p>
+    <p>
+      Fui buscar entender, de verdade, o que acontecia comigo.
+      E quando entendi, não consegui guardar só pra mim.
+    </p>
+    <p>
+      Hoje trabalho com mulheres que estão onde eu estive.
+      Que carregam um peso que não escolheram.
+      Que repetem padrões que elas mesmas reconhecem, mas não conseguem parar.
+    </p>
+    <p>
+      Eu sei exatamente como você se sente, mulher.
+      Porque eu estive lá.
+    </p>
+    <p class="assinatura">Karla Vieira</p>
+  </div>
+</section>
+
+<!-- 10. DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="container">
+    <h2>O que dizem quem já passou por aqui</h2>
+    <div class="depo-grid">
+      <div class="depo-card">
+        <p class="texto">
+          "Passei o workshop inteiro chorando. Mas uma coisa ficou: eu finalmente entendi de onde vem
+          esse medo que tenho de pedir ajuda. Carreguei isso desde criança e nunca soube nomear."
+        </p>
+        <p class="nome">Anônima</p>
+      </div>
+      <div class="depo-card">
+        <p class="texto">
+          "Meu pai nunca foi violento, mas era ausente. Eu achava que isso não tinha me afetado tanto.
+          Depois desse workshop entendi por que não consigo confiar no meu marido do jeito que quero."
+        </p>
+        <p class="nome">Anônima</p>
+      </div>
+      <div class="depo-card">
+        <p class="texto">
+          "Que exercício poderoso. Eu cheguei sem esperar muito e saí diferente.
+          Karla tem um jeito de falar que chega em você sem julgamento.
+          Nunca tinha visto o que meu pai deixou em mim tão claramente."
+        </p>
+        <p class="nome">Anônima</p>
+      </div>
+      <div class="depo-card">
+        <p class="texto">
+          "Que encontro maravilhoso, emocionante. GRATIDÃO Karla pelo acolhimento, pela entrega.
+          Renovou minhas esperanças."
+        </p>
+        <p class="nome">Anônima</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. FAQ -->
+<section id="faq">
+  <div class="container">
+    <h2>Perguntas frequentes</h2>
+    <div class="faq-list">
+      <details>
+        <summary>O workshop é ao vivo?</summary>
+        <p>Não. É gravado, então você acessa na hora que quiser, no seu ritmo, quantas vezes precisar.</p>
+      </details>
+      <details>
+        <summary>Quanto tempo tenho acesso?</summary>
+        <p>Acesso vitalício. Uma vez que você compra, o conteúdo é seu para sempre.</p>
+      </details>
+      <details>
+        <summary>Preciso ter feito terapia antes?</summary>
+        <p>
+          Não. O workshop foi feito para qualquer mulher que quer entender a raiz das suas dores.
+          Não é necessário ter nenhum conhecimento prévio.
+        </p>
+      </details>
+      <details>
+        <summary>É muito pesado emocionalmente?</summary>
+        <p>
+          O conteúdo é profundo, sim. Mas é conduzido com cuidado e acolhimento.
+          Você pode pausar, respirar e voltar quando quiser. O ritmo é seu.
+        </p>
+      </details>
+      <details>
+        <summary>Como acesso após a compra?</summary>
+        <p>
+          Você recebe o acesso por e-mail imediatamente após a confirmação da compra,
+          direto na plataforma Kiwify.
+        </p>
+      </details>
+      <details>
+        <summary>Preciso ter tido um relacionamento ruim com meu pai?</summary>
+        <p>
+          Não necessariamente. A ferida paterna pode existir mesmo em relacionamentos aparentemente normais.
+          Ausência emocional, rigidez ou falta de afeto já são suficientes para deixar marcas.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- 12. CTA FINAL -->
+<section id="cta-final">
+  <div class="container">
+    <p class="versiculo">
+      "O Espírito que vos foi dado não é espírito de escravidão para recair no temor,
+      mas espírito de adoção, pelo qual clamamos: Aba, Pai!"
+    </p>
+    <p class="versiculo-ref">Romanos 8:15</p>
+
+    <h2>Você não precisa que seu pai tenha sido diferente para se libertar do que ele deixou.</h2>
+    <p class="texto">
+      Precisa entender o que ficou dentro de você.
+      É isso que esse workshop faz.
+      Quando você estiver pronta, a porta está aberta.
+    </p>
+    <img src="imagens/wp5-mulher-luz.png" alt="" class="foto-secao" />
+
+    <div class="btn-wrap">
+      <a href="LINK_KIWIFY_PATERNA" class="btn-primary">QUERO ME LIBERTAR — R$47</a>
+      <p class="preco">Acesso vitalício · Acesso imediato após a compra</p>
+      <a href="https://wa.me/5511949760542" class="btn-whatsapp" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Tem dúvidas? Fala comigo no WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Karla Vieira · Todos os direitos reservados</p>
+</footer>
+
+</body>
+</html>
