@@ -309,6 +309,36 @@
     margin-top: 12px;
     letter-spacing: 1px;
   }
+
+  @media print {
+    body {
+      background: white;
+      padding: 0;
+      display: block;
+    }
+
+    .controls, .slide-counter { display: none !important; }
+
+    .slide-container {
+      width: 100%;
+      height: auto;
+      box-shadow: none;
+      overflow: visible;
+    }
+
+    .slide {
+      display: flex !important;
+      width: 100%;
+      height: 100vh;
+      page-break-after: always;
+      break-after: page;
+    }
+
+    .slide:last-child {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+  }
 </style>
 </head>
 <body>
