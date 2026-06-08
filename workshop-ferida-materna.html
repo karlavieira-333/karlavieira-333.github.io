@@ -325,6 +325,38 @@
       stroke-width: 2.5;
     }
 
+    /* ── BÔNUS ── */
+    #bonus {
+      background: var(--vinho-escuro);
+      color: var(--branco);
+      padding: 80px 24px;
+      text-align: center;
+    }
+    #bonus h2 { font-size: 1.8rem; margin-bottom: 12px; }
+    #bonus .intro { font-size: 1.05rem; opacity: 0.85; margin-bottom: 48px; }
+    .bonus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      text-align: left;
+    }
+    .bonus-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 28px;
+    }
+    .bonus-card .numero {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-style: italic;
+      opacity: 0.3;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .bonus-card h3 { font-size: 1.05rem; margin-bottom: 10px; line-height: 1.4; }
+    .bonus-card p { font-size: 0.92rem; opacity: 0.8; line-height: 1.65; }
+
     /* ── 7. PARA QUEM É ── */
     #para-quem {
       background: var(--vinho-claro);
@@ -717,7 +749,43 @@
 </section>
 
 <!-- ══════════════════════════════════════════
-     7. PARA QUEM É
+     7. BÔNUS
+══════════════════════════════════════════ -->
+<section id="bonus">
+  <div class="container">
+    <h2>O que você leva além do workshop</h2>
+    <p class="intro">3 bônus incluídos — sem custo adicional.</p>
+    <div class="bonus-grid">
+      <div class="bonus-card">
+        <div class="numero">01</div>
+        <h3>Exercício de liberação de cargas traumáticas maternas</h3>
+        <p>
+          Uma técnica guiada para liberar o peso emocional que ficou registrado
+          no corpo e na mente desde a infância. Você não sai a mesma depois desse exercício.
+        </p>
+      </div>
+      <div class="bonus-card">
+        <div class="numero">02</div>
+        <h3>Liberte a mulher heroína e sobrecarregada que está dentro de você</h3>
+        <p>
+          Para a mulher que aprendeu cedo a dar conta de tudo e esqueceu
+          como é ser cuidada. Um exercício para soltar o peso de ser sempre a forte.
+        </p>
+      </div>
+      <div class="bonus-card">
+        <div class="numero">03</div>
+        <h3>Exercício profundo para se libertar da sensação de filha rejeitada</h3>
+        <p>
+          Direto para a raiz da ferida da rejeição. Para quem cresceu sentindo
+          que precisava provar que merecia amor — e ainda ouve essa voz hoje.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     8. PARA QUEM É
 ══════════════════════════════════════════ -->
 <section id="para-quem">
   <div class="container">
