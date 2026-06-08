@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Resistência — Karla Vieira</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --terracota: #C1440E;
+    --terracota-escuro: #8B2E08;
+    --bege: #FDF6EE;
+    --bege-medio: #F5E6D3;
+    --marrom: #2C1810;
+    --branco: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .controls {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+
+  .btn {
+    background: var(--terracota);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn:hover { background: var(--terracota-escuro); }
+  .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .slide-counter {
+    color: var(--bege);
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+  .slide-container {
+    width: 960px;
+    height: 540px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+
+  .slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .slide.active { display: flex; }
+
+  /* SLIDE STYLES */
+
+  /* Terracota escuro com texto claro */
+  .s-terracota {
+    background: var(--terracota);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    text-align: center;
+  }
+
+  /* Bege com texto escuro */
+  .s-bege {
+    background: var(--bege);
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px;
+  }
+
+  /* Marrom escuro com texto claro */
+  .s-escuro {
+    background: var(--marrom);
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px;
+  }
+
+  /* Dividido — dois painéis */
+  .s-dividido {
+    background: var(--bege);
+    flex-direction: row;
+  }
+
+  .painel-esq {
+    width: 40%;
+    background: var(--terracota);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px 40px;
+  }
+
+  .painel-dir {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px 50px;
+  }
+
+  /* TIPOGRAFIA */
+  .tag {
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+
+  .tag-light { color: var(--bege); }
+  .tag-dark { color: var(--marrom); }
+  .tag-terracota { color: var(--terracota); }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    line-height: 1.1;
+    font-weight: 900;
+  }
+
+  h1.light { color: var(--branco); }
+  h1.dark { color: var(--marrom); }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  h2.light { color: var(--branco); }
+  h2.dark { color: var(--marrom); }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+
+  h3.light { color: var(--branco); }
+  h3.dark { color: var(--marrom); }
+  h3.terracota { color: var(--terracota); }
+
+  p {
+    font-family: 'Lato', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  p.light { color: rgba(255,255,255,0.9); }
+  p.dark { color: var(--marrom); }
+  p.muted { color: rgba(44,24,16,0.65); }
+
+  .destaque {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.5;
+  }
+
+  .destaque.light { color: var(--bege); }
+  .destaque.dark { color: var(--marrom); }
+
+  ul {
+    list-style: none;
+    margin-top: 16px;
+  }
+
+  ul li {
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    opacity: 0.5;
+  }
+
+  ul.light li { color: rgba(255,255,255,0.9); }
+  ul.dark li { color: var(--marrom); }
+
+  .numero-grande {
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    font-weight: 900;
+    opacity: 0.08;
+    position: absolute;
+    right: 40px;
+    bottom: 20px;
+    line-height: 1;
+  }
+
+  .numero-grande.light { color: white; }
+  .numero-grande.dark { color: var(--marrom); }
+
+  .linha {
+    width: 60px;
+    height: 3px;
+    background: var(--terracota);
+    margin: 20px 0;
+  }
+
+  .linha.light { background: rgba(255,255,255,0.4); }
+
+  .assinatura {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-style: italic;
+    position: absolute;
+    bottom: 24px;
+    right: 32px;
+    opacity: 0.4;
+  }
+
+  .assinatura.light { color: white; }
+  .assinatura.dark { color: var(--marrom); }
+
+  .versículo-box {
+    background: rgba(193,68,14,0.1);
+    border-left: 4px solid var(--terracota);
+    padding: 20px 24px;
+    margin-top: 20px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .card {
+    background: rgba(193,68,14,0.08);
+    border-top: 3px solid var(--terracota);
+    padding: 20px;
+  }
+
+  .card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--terracota);
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    font-size: 14px;
+    color: var(--marrom);
+    line-height: 1.5;
+  }
+
+  .passo-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--terracota);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .bold { font-weight: 700; }
+  .italic { font-style: italic; }
+  .mt { margin-top: 16px; }
+  .mt-sm { margin-top: 8px; }
+
+  /* Keyboard nav hint */
+  .keyboard-hint {
+    color: rgba(255,255,255,0.3);
+    font-size: 12px;
+    margin-top: 12px;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <button class="btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Anterior</button>
+  <span class="slide-counter" id="counter">1 / 35</span>
+  <button class="btn" id="nextBtn" onclick="changeSlide(1)">Próximo →</button>
+</div>
+
+<div class="slide-container">
+
+  <!-- SLIDE 1 — ABERTURA -->
+  <div class="slide s-terracota active">
+    <div class="tag tag-light">Workshop · Karla Vieira</div>
+    <div class="linha light"></div>
+    <h1 class="light">A Resistência</h1>
+    <p class="light mt" style="font-size:20px; max-width:580px;">Por que você sabota quando está prestes a crescer — e como atravessar</p>
+    <div class="numero-grande light">R</div>
+    <span class="assinatura light">Karla Vieira · Psicanalista</span>
+  </div>
+
+  <!-- SLIDE 2 — O QUE É -->
+  <div class="slide s-bege">
+    <div class="tag tag-terracota">O que é a resistência</div>
+    <h2 class="dark">Seu cérebro tem um GPS antigo.</h2>
+    <div class="linha"></div>
+    <p class="dark mt">Ele tem um mapa gravado desde a infância — com rotas conhecidas, atalhos familiares e destinos seguros.</p>
+    <p class="dark mt">Quando você começa a crescer, a mudar, a sair dos padrões — você está tentando ir para um lugar que <span class="bold">não está no mapa.</span></p>
+    <p class="dark mt">E o GPS entra em pânico: <span class="italic">"Recalculando. Recalculando. Volta. Esse caminho é perigoso."</span></p>
+    <div class="numero-grande dark">1</div>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 3 — NEUROCIÊNCIA -->
+  <div class="slide s-escuro">
+    <div class="tag tag-light">Neurociência</div>
+    <h2 class="light">Homeostase Neural</h2>
+    <div class="linha light"></div>
+    <p class="light mt">O cérebro é biologicamente programado para manter o que conhece. Qualquer mudança — mesmo positiva — ativa o sistema de alarme.</p>
+    <p class="light mt">O cérebro não diferencia mudança boa de mudança ruim. Ele só sabe: <span class="bold italic">"isso é diferente do que sempre foi. Perigo."</span></p>
+    <div class="numero-grande light">2</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 4 — PSICANÁLISE -->
+  <div class="slide s-bege">
+    <div class="tag tag-terracota">Psicanálise</div>
+    <h2 class="dark">A parte que prefere a dor conhecida.</h2>
+    <div class="linha"></div>
+    <p class="dark mt">Freud descrevia como <span class="bold">resistência ao tratamento</span> — a parte inconsciente que prefere a dor conhecida ao bem desconhecido.</p>
+    <div class="versículo-box mt">
+      <p class="dark"><span class="bold italic">"O sofrimento familiar é mais seguro que a alegria estranha."</span></p>
+    </div>
+    <p class="dark mt">Quanto mais perto você está de atravessar, <span class="bold">mais alto o alarme toca.</span></p>
+    <div class="numero-grande dark">3</div>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 5 — POR QUE APARECE QUANDO EVOLUI -->
+  <div class="slide s-terracota">
+    <div class="tag tag-light">A grande verdade</div>
+    <h2 class="light">A resistência não aparece quando você está parada.</h2>
+    <div class="linha light"></div>
+    <p class="light mt" style="font-size:20px;">Ela aparece quando você está <span class="bold">prestes a atravessar.</span></p>
+    <p class="light mt">Se você está sentindo resistência hoje — isso não é sinal para voltar. É sinal de que você está exatamente no lugar certo.</p>
+    <div class="numero-grande light">4</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 6 — AS TRÊS ESFERAS -->
+  <div class="slide s-bege">
+    <div class="tag tag-terracota">Onde ela aparece</div>
+    <h2 class="dark">As Três Esferas da Resistência</h2>
+    <div class="linha"></div>
+    <div class="grid-3 mt">
+      <div class="card">
+        <h4>CORPO</h4>
+        <p>Fadiga, dor física, doenças na véspera. O corpo cria saídas para evitar o avanço.</p>
+      </div>
+      <div class="card">
+        <h4>ALMA</h4>
+        <p>Pensamentos catastróficos, procrastinação, autossabotagem, memórias negativas.</p>
+      </div>
+      <div class="card">
+        <h4>ESPÍRITO</h4>
+        <p>Distanciamento de Deus, dúvida do propósito, culpa espiritual, seca interior.</p>
+      </div>
+    </div>
+    <p class="muted mt" style="font-size:14px;">Começa numa esfera e contamina as outras. O tratamento precisa ser nas três.</p>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 7 — RESISTÊNCIA NO CORPO -->
+  <div class="slide s-escuro">
+    <div class="tag tag-light">Esfera 1</div>
+    <h2 class="light">A Resistência no Corpo</h2>
+    <div class="linha light"></div>
+    <p class="light mt">O corpo é o primeiro a saber. Antes da mente entender o que está acontecendo, o corpo já reagiu.</p>
+    <ul class="light mt">
+      <li>Peso inexplicável — travamento antes de agir</li>
+      <li>Fadiga súbita — exaustão antes de momentos importantes</li>
+      <li>Dor física sem causa — aperto no peito, nó na garganta</li>
+      <li>Doenças que aparecem na véspera</li>
+      <li>Coração acelerado, mãos suando, mente em branco</li>
+    </ul>
+    <div class="numero-grande light">C</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 8 — EXEMPLO CORPO -->
+  <div class="slide s-bege">
+    <div class="tag tag-terracota">Exemplo clínico · Corpo</div>
+    <h3 class="dark">Toda semana. Toda reunião. Diarreia.</h3>
+    <div class="linha"></div>
+    <p class="dark mt">Uma paciente tinha uma reunião com cliente novo toda semana. Toda semana, na manhã da reunião, acordava com diarreia. Sem infecção. Sem causa física identificada.</p>
+    <p class="dark mt">O corpo estava criando um motivo concreto para cancelar.</p>
+    <div class="versículo-box mt">
+      <p class="dark">Quando tratamos a ferida da rejeição — o medo de não ser boa o suficiente — <span class="bold">os sintomas desapareceram.</span></p>
+    </div>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 9 — COMO SAIR DO CORPO -->
+  <div class="slide s-terracota">
+    <div class="tag tag-light">Como sair · Corpo</div>
+    <h2 class="light">Regulando o sistema nervoso</h2>
+    <div class="linha light"></div>
+    <ul class="light mt">
+      <li><span class="bold">Respiração 4-4-6</span> — inspira 4, segura 4, solta 6. Ativa o nervo vago. Em 2 minutos você sai do modo alerta.</li>
+      <li><span class="bold">Ancoragem sensorial</span> — 5 coisas que vê, 4 que toca, 3 que ouve. Traz o sistema nervoso ao presente.</li>
+      <li><span class="bold">Movimento físico</span> — levanta, sacode os braços, caminha 2 minutos. Libera o cortisol acumulado.</li>
+      <li><span class="bold">Toque de acolhimento</span> — mão no coração. Fala: "Estou segura. Não há perigo real."</li>
+    </ul>
+    <div class="numero-grande light">C</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 10 — RESISTÊNCIA NA ALMA -->
+  <div class="slide s-bege">
+    <div class="tag tag-terracota">Esfera 2</div>
+    <h2 class="dark">A Resistência na Alma</h2>
+    <div class="linha"></div>
+    <p class="dark mt">A alma é onde moram as emoções, os pensamentos, a vontade e a memória. A resistência aqui é mais sutil — mas mais duradoura.</p>
+    <ul class="dark mt">
+      <li>Pensamentos catastróficos do nada — "vai dar errado, quem você pensa que é"</li>
+      <li>Loop mental sem resolução</li>
+      <li>Comparação compulsiva quando você começa a crescer</li>
+      <li>Tristeza inexplicável quando coisas boas acontecem</li>
+      <li>Procrastinação que parece física</li>
+      <li>Memórias negativas surgindo na hora errada</li>
+    </ul>
+    <div class="numero-grande dark">A</div>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 11 — EXEMPLO ALMA -->
+  <div class="slide s-escuro">
+    <div class="tag tag-light">Exemplo clínico · Alma</div>
+    <h3 class="light">Na semana do lançamento, todas as memórias de fracasso voltaram.</h3>
+    <div class="linha light"></div>
+    <p class="light mt">Uma paciente estava prestes a lançar seu primeiro produto digital. Na semana do lançamento, começou a se lembrar de tudo que já tinha tentado e falhado.</p>
+    <p class="light mt">A empresa que fechou. O relacionamento que terminou. O emprego que perdeu.</p>
+    <div class="versículo-box mt" style="border-left-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05);">
+      <p class="light">A alma varrendo o arquivo interno em busca de <span class="bold">evidências de que ela não devia arriscar.</span></p>
+    </div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 12 — COMO SAIR DA ALMA -->
+  <div class="slide s-bege">
+    <div class="tag tag-terracota">Como sair · Alma</div>
+    <h2 class="dark">Interrompendo o loop</h2>
+    <div class="linha"></div>
+    <ul class="dark mt">
+      <li><span class="bold">Fale "Para" em voz alta</span> — não na cabeça. Depois substitua pela verdade.</li>
+      <li><span class="bold">Escreva — não pense</span> — escreve o pensamento. Ao lado: "isso é verdade ou é medo?" Escreve a verdade.</li>
+      <li><span class="bold">Ligue para alguém de confiança</span> — na resistência nossa percepção distorce. Precisamos de perspectiva externa.</li>
+      <li><span class="bold">Revise suas evidências</span> — escreve 5 coisas que você já conseguiu que pareciam impossíveis.</li>
+      <li><span class="bold">Identifique a crença</span> — "o que eu precisaria acreditar sobre mim para esse pensamento fazer sentido?"</li>
+    </ul>
+    <div class="numero-grande dark">A</div>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 13 — RESISTÊNCIA NO ESPÍRITO -->
+  <div class="slide s-terracota">
+    <div class="tag tag-light">Esfera 3</div>
+    <h2 class="light">A Resistência no Espírito</h2>
+    <div class="linha light"></div>
+    <p class="light mt">A mais sutil e a mais devastadora. Ela ataca exatamente o que te sustenta.</p>
+    <ul class="light mt">
+      <li>Distanciamento de Deus — você para de orar sem querer parar</li>
+      <li>Sensação de abandono espiritual — "Deus não está me ouvindo"</li>
+      <li>Dúvida do propósito — "será que é isso mesmo?"</li>
+      <li>Culpa espiritual — "quem sou eu para querer isso? Isso é orgulho?"</li>
+      <li>Seca espiritual — oração vira obrigação</li>
+    </ul>
+    <div class="numero-grande light">E</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 14 — O INIMIGO NÃO ATACA QUEM ESTÁ PARADO -->
+  <div class="slide s-escuro">
+    <div class="tag tag-light">Verdade espiritual</div>
+    <h2 class="light" style="font-size:42px; max-width:700px;">O inimigo não ataca quem está parado.</h2>
+    <div class="linha light"></div>
+    <p class="light mt">Ele ataca quem está avançando. E ele sabe exatamente onde atacar — na sua identidade, no seu propósito, na sua conexão com a Fonte.</p>
+    <p class="light mt">Se ele consegue te fazer duvidar de quem Deus disse que você é, ele não precisa fazer mais nada. <span class="bold italic">Você mesma para.</span></p>
+    <div class="numero-grande light">E</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 15 — EXEMPLO ESPÍRITO -->
+  <div class="slide s-bege">
+    <div class="tag tag-terracota">Exemplo clínico · Espírito</div>
+    <h3 class="dark">"Estava ficando dependente da terapia em vez de depender de Deus."</h3>
+    <div class="linha"></div>
+    <p class="dark mt">Uma paciente estava no processo mais bonito de cura que já tinha vivido. Começou a se sentir leve, inteira, em paz. E aí parou de vir às sessões.</p>
+    <p class="dark mt">Quando voltou meses depois, disse que tinha sentido que estava ficando dependente da terapia em vez de depender de Deus.</p>
+    <div class="versículo-box mt">
+      <p class="dark">A resistência usou a fé para <span class="bold">interromper a cura.</span></p>
+    </div>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 16 — COMO SAIR DO ESPÍRITO -->
+  <div class="slide s-terracota">
+    <div class="tag tag-light">Como sair · Espírito</div>
+    <h2 class="light">Reconectando com a Fonte</h2>
+    <div class="linha light"></div>
+    <ul class="light mt">
+      <li><span class="bold">Oração de presença</span> — não lista de pedidos. Só: "Senhor, estou aqui. Me encontra aqui."</li>
+      <li><span class="bold">Declaração de identidade</span> — não leia. Declare em voz alta as verdades que não mudam.</li>
+      <li><span class="bold">Adoração como arma</span> — não espere sentir. Coloca a música e fica diante dela. Mesmo sem sentir nada.</li>
+      <li><span class="bold">Quebre o isolamento</span> — ligue para alguém de confiança espiritual. "Ora por mim agora."</li>
+      <li><span class="bold">Relembre o que Deus já fez</span> — escreve as evidências do passado. O Deus que te livrou antes é o mesmo hoje.</li>
+    </ul>
+    <div class="numero-grande light">E</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 17 — VERSÍCULOS DE IDENTIDADE -->
+  <div class="slide s-escuro">
+    <div class="tag tag-light">Identidade em Deus</div>
+    <h2 class="light">Verdades que não mudam</h2>
+    <div class="linha light"></div>
+    <ul class="light mt">
+      <li><span class="italic">"Antes de te formar no ventre, Eu te conheci."</span> — Jeremias 1:5</li>
+      <li><span class="italic">"Ainda que minha mãe me abandone, o Senhor me acolherá."</span> — Salmo 27:10</li>
+      <li><span class="italic">"Porque sou eu que conheço os planos que tenho para vocês."</span> — Jeremias 29:11</li>
+      <li><span class="italic">"Tudo posso naquele que me fortalece."</span> — Filipenses 4:13</li>
+    </ul>
+    <p class="light mt">Não leia. <span class="bold">Declare em voz alta.</span> O ouvido precisa ouvir o que a mente ainda não acredita.</p>
+    <div class="numero-grande light">E</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 18 — AS FERIDAS E A RESISTÊNCIA -->
+  <div class="slide s-bege">
+    <div class="tag tag-terracota">As feridas emocionais</div>
+    <h2 class="dark">Cada ferida tem sua própria voz de resistência</h2>
+    <div class="linha"></div>
+    <p class="dark mt">Reconhecer essa voz específica é o primeiro passo para não obedecê-la.</p>
+    <div class="grid-3 mt">
+      <div class="card">
+        <h4>Rejeição</h4>
+        <p>"Quem você pensa que é? Vão te criticar."</p>
+      </div>
+      <div class="card">
+        <h4>Abandono</h4>
+        <p>"Se você mudar, as pessoas vão embora."</p>
+      </div>
+      <div class="card">
+        <h4>Humilhação</h4>
+        <p>"Você vai se envergonhar na frente de todos."</p>
+      </div>
+    </div>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 19 — FERIDAS 2 -->
+  <div class="slide s-bege">
+    <div class="tag tag-terracota">As feridas emocionais</div>
+    <h2 class="dark">Injustiça e Traição</h2>
+    <div class="linha"></div>
+    <div class="grid-3 mt" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h4>Injustiça</h4>
+        <p>"Se você soltar o controle, tudo vai desmoronar. Ninguém faz do jeito certo."</p>
+        <p style="margin-top:8px; font-size:13px; opacity:0.6;">Resultado: controle obsessivo, rigidez, não delega.</p>
+      </div>
+      <div class="card">
+        <h4>Traição</h4>
+        <p>"Você vai se machucar de novo. Não dá para confiar em ninguém."</p>
+        <p style="margin-top:8px; font-size:13px; opacity:0.6;">Resultado: fecha, testa, sabota relacionamentos.</p>
+      </div>
+    </div>
+    <div class="versículo-box mt">
+      <p class="dark">A resistência usa a linguagem da sua ferida. Quando você conhece a ferida, você conhece a voz.</p>
+    </div>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 20 — FERIDA REJEIÇÃO DETALHADO -->
+  <div class="slide s-dividido">
+    <div class="painel-esq">
+      <div class="tag tag-light">Ferida da Rejeição</div>
+      <h3 class="light" style="margin-top:16px;">"Quem você pensa que é?"</h3>
+      <div class="linha light"></div>
+      <p class="light mt" style="font-size:15px;">A resistência aparece como autossabotagem, procrastinação e sumir antes de ser vista.</p>
+    </div>
+    <div class="painel-dir">
+      <p class="dark"><span class="bold">No cotidiano:</span> a mulher que tem um negócio mas nunca lança. Que escreve o post e não publica. Que ensaia a conversa mas não tem.</p>
+      <p class="dark mt"><span class="bold">Exemplo clínico:</span> uma paciente estava prestes a abrir sua empresa. No dia de assinar o contrato, ligou chorando dizendo que tinha certeza que ia falhar.</p>
+      <div class="versículo-box mt">
+        <p class="dark">A resistência estava protegendo a criança de 8 anos que o pai disse que nunca ia dar em nada. Não a adulta de 35.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 21 — FERIDA ABANDONO DETALHADO -->
+  <div class="slide s-dividido">
+    <div class="painel-esq">
+      <div class="tag tag-light">Ferida do Abandono</div>
+      <h3 class="light" style="margin-top:16px;">"Se você mudar, vão embora."</h3>
+      <div class="linha light"></div>
+      <p class="light mt" style="font-size:15px;">A resistência aparece como retrocesso — volta a se anular quando estava se fortalecendo.</p>
+    </div>
+    <div class="painel-dir">
+      <p class="dark"><span class="bold">No cotidiano:</span> a mulher que estava colocando limites e recua. Que estava crescendo e começa a diminuir o próprio mérito para não se destacar.</p>
+      <p class="dark mt"><span class="bold">Exemplo clínico:</span> uma paciente começou a ganhar dinheiro próprio pela primeira vez. Em vez de comemorar, começou a sabotar as vendas. Ela acreditava inconscientemente que se ficasse independente, o marido não ia mais precisar dela.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 22 — FERIDA HUMILHAÇÃO DETALHADO -->
+  <div class="slide s-dividido">
+    <div class="painel-esq">
+      <div class="tag tag-light">Ferida da Humilhação</div>
+      <h3 class="light" style="margin-top:16px;">"Você vai errar e vão rir."</h3>
+      <div class="linha light"></div>
+      <p class="light mt" style="font-size:15px;">A resistência aparece como paralisia na hora da exposição.</p>
+    </div>
+    <div class="painel-dir">
+      <p class="dark"><span class="bold">No cotidiano:</span> prepara a apresentação por semanas e no último minuto pede para outro apresentar. Sabe a resposta mas não levanta a mão.</p>
+      <p class="dark mt"><span class="bold">Exemplo clínico:</span> uma paciente foi convidada para dar uma palestra na área em que é especialista. No dia anterior cancelou. Quando trabalhamos, ela lembrou que aos 10 anos errou uma conta na lousa e a professora a humilhou. Décadas depois, o corpo ainda guardava aquela cena.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 23 — PROTOCOLO GERAL -->
+  <div class="slide s-escuro">
+    <div class="tag tag-light">O botão de reset</div>
+    <h2 class="light">Protocolo de Emergência</h2>
+    <div class="linha light"></div>
+    <p class="light mt">Quando a resistência bater — e você vai sentir no corpo antes de entender na cabeça — aplique em ordem:</p>
+    <ul class="light mt">
+      <li><span class="bold">Passo 1:</span> Pare e nomeie em voz alta</li>
+      <li><span class="bold">Passo 2:</span> Ancore no corpo — respiração 4-4-6</li>
+      <li><span class="bold">Passo 3:</span> Identifique a ferida e a mentira</li>
+      <li><span class="bold">Passo 4:</span> Contradiga com uma verdade específica</li>
+      <li><span class="bold">Passo 5:</span> Uma ação pequena e imediata</li>
+    </ul>
+    <div class="numero-grande light">P</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 24 — PASSO 1 -->
+  <div class="slide s-bege">
+    <div class="passo-num">01</div>
+    <div class="tag tag-terracota">Passo 1</div>
+    <h2 class="dark">Pare e Nomeie</h2>
+    <div class="linha"></div>
+    <p class="dark mt">Fale em voz alta — não só na cabeça:</p>
+    <div class="versículo-box mt">
+      <p class="dark italic">"Isso é resistência. Meu sistema nervoso está com medo de mudar. Não é verdade. É biologia."</p>
+    </div>
+    <p class="dark mt">Por que funciona: nomear em voz alta ativa o córtex pré-frontal — a parte racional — e começa a desativar a amígdala. É literalmente uma intervenção neurológica.</p>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 25 — PASSO 2 -->
+  <div class="slide s-terracota">
+    <div class="passo-num" style="color:rgba(255,255,255,0.3);">02</div>
+    <div class="tag tag-light">Passo 2</div>
+    <h2 class="light">Ancore no Corpo</h2>
+    <div class="linha light"></div>
+    <p class="light mt"><span class="bold">Respiração 4-4-6:</span></p>
+    <ul class="light mt">
+      <li>Inspira pelo nariz contando 4</li>
+      <li>Segura contando 4</li>
+      <li>Solta pela boca contando 6</li>
+      <li>Repete 4 vezes</li>
+    </ul>
+    <p class="light mt">A expiração mais longa ativa o nervo vago — o freio do sistema nervoso. Em 2 minutos você sai do modo alerta. Não é metáfora. <span class="bold">É fisiologia.</span></p>
+    <div class="numero-grande light">2</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 26 — PASSO 3 -->
+  <div class="slide s-escuro">
+    <div class="passo-num" style="color:rgba(255,255,255,0.3);">03</div>
+    <div class="tag tag-light">Passo 3</div>
+    <h2 class="light">Identifique a Ferida e a Mentira</h2>
+    <div class="linha light"></div>
+    <p class="light mt">Faça essas perguntas em voz alta ou por escrito:</p>
+    <ul class="light mt">
+      <li>"Qual ferida está falando — rejeição, abandono, humilhação, injustiça ou traição?"</li>
+      <li>"O que ela está com medo que aconteça?"</li>
+      <li>"Que idade tem essa parte de mim que está reagindo?"</li>
+      <li>"Esse medo é sobre agora ou sobre algo que já aconteceu?"</li>
+    </ul>
+    <p class="light mt"><span class="italic">A criança de 8 anos está com medo. A adulta de hoje pode atravessar.</span></p>
+    <div class="numero-grande light">3</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 27 — PASSO 4 -->
+  <div class="slide s-bege">
+    <div class="passo-num">04</div>
+    <div class="tag tag-terracota">Passo 4</div>
+    <h2 class="dark">Contradiga com uma Verdade Específica</h2>
+    <div class="linha"></div>
+    <ul class="dark mt">
+      <li><span class="bold">Rejeição:</span> "Meu valor foi estabelecido por Deus antes de qualquer pessoa ter a chance de me rejeitar."</li>
+      <li><span class="bold">Abandono:</span> "Crescer não me faz perder amor. Quem me ama de verdade fica mesmo quando eu mudo."</li>
+      <li><span class="bold">Humilhação:</span> "Errar em público não me destrói. Ocupar espaço é meu direito e meu propósito."</li>
+      <li><span class="bold">Injustiça:</span> "Soltar o controle é confiar em Deus — não é fraqueza."</li>
+      <li><span class="bold">Traição:</span> "Minha história passada não é uma profecia do meu futuro."</li>
+    </ul>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 28 — PASSO 5 -->
+  <div class="slide s-terracota">
+    <div class="passo-num" style="color:rgba(255,255,255,0.3);">05</div>
+    <div class="tag tag-light">Passo 5</div>
+    <h2 class="light">Uma Ação Pequena e Imediata</h2>
+    <div class="linha light"></div>
+    <p class="light mt">Não espere o medo passar. Faça uma coisa — só uma — em direção ao que a resistência está bloqueando.</p>
+    <p class="light mt">Não o projeto inteiro. Não a conversa toda. Não o lançamento completo.</p>
+    <div class="versículo-box mt" style="border-left-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.1);">
+      <p class="light bold">Manda a mensagem. Publica o post. Assina o documento. Digita a primeira linha.</p>
+    </div>
+    <p class="light mt">A ação desfaz a resistência. A espera a fortalece.</p>
+    <div class="numero-grande light">5</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 29 — ORAÇÃO DE ANCORAGEM -->
+  <div class="slide s-escuro">
+    <div class="tag tag-light">Oração de ancoragem</div>
+    <h2 class="light">Para usar no momento da crise</h2>
+    <div class="linha light"></div>
+    <div style="margin-top: 24px; border-left: 3px solid rgba(255,255,255,0.3); padding-left: 28px;">
+      <p class="light italic" style="font-size:18px; line-height:1.9;">
+        "Senhor, eu reconheço que essa resistência não é maior do que Tu.<br>
+        Eu sei que estou prestes a atravessar — e por isso o medo é grande.<br>
+        Eu entrego essa ferida nas Tuas mãos.<br>
+        Me dá coragem não para não sentir medo,<br>
+        mas para agir mesmo sentindo.<br>
+        Porque Tu que começaste a boa obra em mim, vais completar.<br>
+        Eu confio."
+      </p>
+    </div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 30 — EXERCÍCIO PRÁTICO -->
+  <div class="slide s-bege">
+    <div class="tag tag-terracota">Exercício prático</div>
+    <h2 class="dark">Mapeando sua resistência agora</h2>
+    <div class="linha"></div>
+    <p class="dark mt">Pega papel e caneta. Responde com honestidade:</p>
+    <ul class="dark mt">
+      <li>Qual área da sua vida está em resistência agora?</li>
+      <li>Ela aparece mais no corpo, na alma ou no espírito?</li>
+      <li>Qual ferida está por baixo dessa resistência?</li>
+      <li>O que a voz da resistência está dizendo especificamente?</li>
+      <li>Qual é a UMA ação que você pode fazer ainda hoje?</li>
+    </ul>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 31 — EXERCÍCIO LIBERAÇÃO -->
+  <div class="slide s-terracota">
+    <div class="tag tag-light">Exercício de liberação</div>
+    <h2 class="light">Liberando a carga da resistência</h2>
+    <div class="linha light"></div>
+    <ul class="light mt">
+      <li><span class="bold">Pés no chão.</span> Sente o contato. Respira 4-4-6 três vezes.</li>
+      <li><span class="bold">Mão no peito.</span> Sente o calor. Percebe onde no corpo a resistência mora.</li>
+      <li><span class="bold">Fala para essa sensação:</span> "Eu te vejo. Você me protegeu quando eu era pequena. Mas eu cresci. Pode ir."</li>
+      <li><span class="bold">Imagina luz entrando</span> pelo topo da cabeça, descendo, dissolvendo o que está preso.</li>
+      <li><span class="bold">Declara em voz alta:</span> "Eu liberto o que me prende. Eu avanço. Eu atravesso."</li>
+    </ul>
+    <div class="numero-grande light">L</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 32 — RESUMO -->
+  <div class="slide s-escuro">
+    <div class="tag tag-light">Resumindo</div>
+    <h2 class="light">O que você aprendeu hoje</h2>
+    <div class="linha light"></div>
+    <ul class="light mt">
+      <li>A resistência é biológica — não é fraqueza, é o cérebro protegendo o padrão</li>
+      <li>Ela aparece nas três esferas: corpo, alma e espírito</li>
+      <li>Cada ferida tem uma voz específica de resistência</li>
+      <li>Existe um protocolo de 5 passos para atravessar</li>
+      <li>A ação desfaz a resistência — a espera a fortalece</li>
+      <li>Do outro lado da resistência está a versão de você que você está tentando se tornar</li>
+    </ul>
+    <div class="numero-grande light">R</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 33 — FRASE FINAL -->
+  <div class="slide s-terracota">
+    <div class="tag tag-light">Para levar</div>
+    <div class="linha light"></div>
+    <h2 class="light" style="font-size:38px; max-width:750px; line-height:1.3; margin-top:20px;">"A resistência não aparece quando você está parada. Ela aparece quando você está prestes a atravessar."</h2>
+    <p class="light mt" style="font-size:20px;">Se você está sentindo resistência hoje — <span class="bold">parabéns.</span></p>
+    <p class="light mt-sm" style="font-size:20px;">É sinal de que você está exatamente no lugar certo.</p>
+    <div class="numero-grande light">"</div>
+    <span class="assinatura light">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 34 — CONVITE F5 -->
+  <div class="slide s-bege">
+    <div class="tag tag-terracota">Próximo passo</div>
+    <h2 class="dark">Você não precisa atravessar sozinha.</h2>
+    <div class="linha"></div>
+    <p class="dark mt">O F5 — O Recomeço é um acompanhamento terapêutico em grupo de 8 sessões onde trabalhamos cada ferida emocional na raiz.</p>
+    <p class="dark mt">Com neurociência, psicanálise e fé. Com exercícios práticos. Com acompanhamento real.</p>
+    <div class="versículo-box mt">
+      <p class="dark bold" style="font-size:20px;">Vagas abertas. Link no chat.</p>
+    </div>
+    <p class="muted mt">Carrinho aberto por tempo limitado.</p>
+    <span class="assinatura dark">Karla Vieira</span>
+  </div>
+
+  <!-- SLIDE 35 — ENCERRAMENTO -->
+  <div class="slide s-escuro">
+    <div class="tag tag-light">Obrigada</div>
+    <h1 class="light" style="font-size:60px;">Foi uma honra.</h1>
+    <div class="linha light"></div>
+    <p class="light mt" style="font-size:18px; max-width:600px;">Cuidar de você por esse tempo foi um presente. Que cada coisa que você levou hoje se torne ação, transformação e liberdade.</p>
+    <div class="versículo-box mt" style="border-left-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05);">
+      <p class="light italic">"Aquele que começou a boa obra em você, vai completá-la." — Filipenses 1:6</p>
+    </div>
+    <p class="light mt bold" style="font-size:16px; letter-spacing:2px;">KARLA VIEIRA · PSICANALISTA</p>
+    <div class="numero-grande light">∞</div>
+  </div>
+
+</div>
+
+<p class="keyboard-hint">Use ← → para navegar ou clique nos botões</p>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  
+  document.getElementById('counter').textContent = `1 / ${total}`;
+
+  function changeSlide(dir) {
+    slides[current].classList.remove('active');
+    current = Math.max(0, Math.min(total - 1, current + dir));
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = `${current + 1} / ${total}`;
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').disabled = current === total - 1;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  });
+</script>
+</body>
+</html>
